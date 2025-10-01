@@ -1,0 +1,11 @@
+Etapa 1, 
+Criado Dockerfile usando multi-stage build. O primeiro estágio será responsável por preparar 
+o ambiente e configurar dependências, enquanto o segundo estágio criará a imagem final otimizada. 
+Usando :
+Alpine Linux como base para reduzir o tamanho da imagem, configurar Nginx e PHP-FPM juntos,
+e criar um usuário não-root para executar os processos.
+
+Etapa 2, o pipeline do GitHub Actions será acionado a cada push na branch main. Ele fará checkout do código, construirá a imagem Docker, executará o scan de vulnerabilidades com Trivy, e fará push para o Docker Hub apenas se não houver vulnerabilidades críticas. Vamos usar GitHub Secrets para armazenar suas credenciais do Docker Hub de forma segura.
+
+Etapa 3, o Terraform provisionará um cluster ECS, configurará uma VPC com subnets públicas e privadas, criará um Application Load Balancer para distribuir o tráfego, e definirá a task definition do ECS com a imagem da aplicação. 
+

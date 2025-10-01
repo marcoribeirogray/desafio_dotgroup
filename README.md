@@ -1,1 +1,2 @@
 # desafio_dotgroup
+Para a infraestrutura AWS, optei por ECS com Fargate. Esta escolha se justifica perfeitamente pelo contexto do desafio: é significativamente mais simples de configurar e gerenciar que EKS, tem custo menor para ambientes de desenvolvimento e testes, não requer gerenciamento de nodes do Kubernetes, e é totalmente serverless. O ECS com Fargate permite que o foquemos na aplicação sem nos preocupar com a infraestrutura subjacente, o que se alinha perfeitamente com a proposta de modernizar uma aplicação legada de forma pragmática.
