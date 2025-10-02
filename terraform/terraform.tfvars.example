@@ -1,0 +1,9 @@
+aws_region        = "us-east-1"
+project_name      = "desafio-dotgroup"
+environment       = "dev"
+vpc_cidr          = "10.0.0.0/16"
+public_subnets    = ["10.0.1.0/24", "10.0.2.0/24"]
+docker_image      = "marcorassak/desafio_dotgroup:latest"
+desired_count     = 1
+health_check_path = "/"
+assign_public_ip  = true
