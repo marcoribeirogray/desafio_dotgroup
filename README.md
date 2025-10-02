@@ -14,8 +14,11 @@ Workflow principal: `.github/workflows/main.yml`
 - Jobs automáticos: construir imagem Docker, verificar vulnerabilidades (Trivy) e publicar a tag `latest` no Docker Hub (apenas em push).
 - Segredos usados: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`.
 
-Para aplicar Terraform, recomenda-se rodar manualmente (`terraform plan/apply`).
+### Como estender para CD automatizado
+- Adicionar um job 'deploy' no gitHub actions dependente do job 'push' para aplicar Terraform com backend remoto e variaveis protegidas.
+- Para atualizacoes pontuais, executar o comando 'aws ecs update-service --force-new-deployment' usando o digest da imagem publicado, exigindo aprovacao manual via environments protegidos.
 
+Para aplicar Terraform, recomenda-se rodar manualmente (`terraform plan/apply`).
 ## Infraestrutura como Código (Terraform)
 - Arquivos no diretório `terraform/` usam módulos separados: `network`, `security`, `alb`, `ecs`.
 - ECS Fargate foi escolhido em vez de EKS por ser totalmente gerenciado, ter custo inicial menor e permitir foco na aplicação. ECS entrega simplicidade e integração nativa com Application Load Balancer e CloudWatch.
