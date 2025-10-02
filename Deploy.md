@@ -13,19 +13,18 @@
    ```
    A aplicação responde em `http://localhost:8080`.
 
-2. Executar o pipeline (CI/CD)
-   - Faça push na branch `main`.
-   - O GitHub Actions executa build, scan Trivy, push da imagem `latest` e gera o plano Terraform como artefato.
-   - Para aplicar, acesse GitHub Actions → workflow "CI/CD Pipeline" → botão `Run workflow`, informe `sim` no campo `aprovar_deploy` e execute. Esse job manual usa os segredos AWS para rodar `terraform apply` no ambiente `infraestrutura`.
+2. Executar o workflow da aplicação (`main.yml`)
+   - Push ou PR para `main` roda build, scan Trivy e publica a imagem `latest` no Docker Hub.
+   - Após validar, execute `terraform plan`/`apply` manualmente ou adapte o pipeline futuramente para automatizar essa etapa com aprovação.
 
-3. Provisionar infraestrutura manualmente 
+3. Provisionar infraestrutura manualmente
    ```bash
    cd terraform
    terraform init
    terraform plan
    terraform apply
    ```
-   Use esse passo apenas se precisar aplicar fora da esteira. Os outputs mostram o nome do cluster ECS e o DNS público do application load balancer.
+   Use esse passo apenas se precisar aplicar fora da esteira. Os outputs mostram o nome do cluster ECS e o DNS público do Application Load Balancer.
 
 4. Atualizar serviço se executar manualmente.
    - Execute `terraform apply` localmente ou use `aws ecs update-service` para forçar a nova imagem.

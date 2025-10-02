@@ -9,26 +9,16 @@
   - `DOCKER_IMAGE` no workflow para apontar para o seu repositório Docker Hub.
 
 ## Pipeline CI/CD (GitHub Actions)
-Workflow em `.github/workflows/ci-cd-desafio-dotgroup.yml` com as etapas abaixo:
+Workflow principal: `.github/workflows/main.yml`
+- Gatilhos: `push` e `pull_request` para `main`.
+- Jobs automáticos: construir imagem Docker, verificar vulnerabilidades (Trivy) e publicar a tag `latest` no Docker Hub (apenas em push).
+- Segredos usados: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`.
 
-**Automático em push/pull request para `main`:**
-1. Construir imagem Docker – checkout, configura `buildx` e gera a imagem localmente.
-2. Verificar vulnerabilidades – baixa o artefato e roda o Trivy (SARIF + tabela).
-3. Publicar imagem Docker – recompila usando cache e envia apenas a tag `latest` para o Docker Hub.
-4. Gerar plano Terraform – roda `terraform plan` e publica o plano como artefato.
-
-**Manual via `Run workflow`:**
-- Aplicar Terraform – disponível apenas em `workflow_dispatch`. Exige inserir `sim` no input `aprovar_deploy`, reaplica o plan e executa `terraform apply` no ambiente `infraestrutura` (pode configurar aprovadores nesse environment).
-
-Segredos necessários:
-- `DOCKERHUB_USERNAME` e `DOCKERHUB_TOKEN` para publicar a imagem.
-- `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION` para os jobs Terraform.
-
-O nome da imagem vem de `env.DOCKER_IMAGE`. Ajuste o environment `infraestrutura` e os aprovadores conforme sua política.
+Para aplicar Terraform, recomenda-se rodar manualmente (`terraform plan/apply`).
 
 ## Infraestrutura como Código (Terraform)
 - Arquivos no diretório `terraform/` usam módulos separados: `network`, `security`, `alb`, `ecs`.
-- ECS Fargate foi escolhido em vez de EKS por ser totalmente gerenciado, ter custo inicial menor e permitir foco na aplicação. ECS entrega simplicidade e integração nativa com app load balancer e cloudwatch.
+- ECS Fargate foi escolhido em vez de EKS por ser totalmente gerenciado, ter custo inicial menor e permitir foco na aplicação. ECS entrega simplicidade e integração nativa com Application Load Balancer e CloudWatch.
 - `terraform/locals.tf` define `common_tags` (padrão `owner=marcoribeiro-desafio-dotgroup`, `managed-by=terraform`). Ajuste conforme necessário.
 - `terraform/terraform.tfvars.example` apresenta valores de exemplo (`aws_profile`, `project_name`, `environment`, CIDRs, imagem Docker). Copie para `terraform.tfvars` e customize.
 - O provider aceita `aws_profile`; caso mantenha vazio, exporte `AWS_PROFILE` antes de rodar.
@@ -40,8 +30,8 @@ Stack principal sugerida para produção:
 - Amazon SNS: alertas em cima dos alarmes de CloudWatch.
 
 Três métricas prioritárias para compor o dashboard:
-1. HTTP 5xx do ALB : acompanhar falhas da aplicação e acionar investigação.
-2. Utilização de CPU/Memória das tarefas ECS : prever necessidade de scale-out e ajustar limites.
+1. HTTP 5xx do ALB: acompanhar falhas da aplicação e acionar investigação.
+2. Utilização de CPU/Memória das tarefas ECS: prever necessidade de scale-out e ajustar limites.
 3. Tempo de resposta médio do ALB (TargetResponseTime): medir a experiência do usuário final.
 
 Com esses itens, a aplicação fica coberta do build ao deploy, mantendo o fluxo simples e eficiente para novos ambientes ou evoluções.
