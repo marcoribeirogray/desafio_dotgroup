@@ -75,11 +75,11 @@ $currentTime = date('Y-m-d H:i:s');
                 <td><?php echo htmlspecialchars($phpVersion); ?></td>
             </tr>
             <tr>
-                <th>Server Time</th>
+                <th>Horário do servidor</th>
                 <td><?php echo htmlspecialchars($currentTime); ?></td>
             </tr>
             <tr>
-                <th>Request Counter</th>
+                <th>Visitas</th>
                 <td><?php echo htmlspecialchars($counter); ?></td>
             </tr>
         </table>
