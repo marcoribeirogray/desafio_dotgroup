@@ -5,14 +5,24 @@
 
 .terraform/
 *.tfstate
-*.tfstate.backup
-terraform.tfvars
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+*.tfvars
+*.tfvars.json
 
 .env
-.env.local
+.env.*
+!.env.example
 credentials.json
 *.pem
 *.key
+*.crt
 
 node_modules/
 vendor/
