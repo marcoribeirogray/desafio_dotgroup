@@ -66,10 +66,11 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.DOCKER_IMAGE }}
-          tags:
-            - type=sha,format=short
-            - type=raw,value=latest
-            - type=datetime,format=YYYYMMDD-HHmmss
+          tags: |
+            type=sha,format=short
+            type=raw,value=latest
+            type=datetime,format=YYYYMMDD-HHmmss
+
 
       - name: Build and Push Docker image
         uses: docker/build-push-action@v5
