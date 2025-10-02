@@ -13,4 +13,4 @@ fi
 # Executa os passos do Git
 git add .
 git commit -m "$commit_message"
-git push origin homologacao
+git push origin main
