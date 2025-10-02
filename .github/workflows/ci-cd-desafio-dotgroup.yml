@@ -91,7 +91,6 @@ jobs:
           tags: |
             type=sha,format=short
             type=raw,value=latest
-            type=datetime,format=YYYYMMDD-HHmmss
 
 
       - name: Build and Push Docker image
