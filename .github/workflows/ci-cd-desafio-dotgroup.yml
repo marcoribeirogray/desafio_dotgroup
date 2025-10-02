@@ -81,4 +81,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - run: echo "Imagem enviada com sucesso: ${{ steps.meta.outputs.tags }}"
+      - name: Mensagem de sucesso
+        run: |
+          echo "Imagem enviada com sucesso: ${{ steps.meta.outputs.tags }}"
