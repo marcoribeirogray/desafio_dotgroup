@@ -38,3 +38,5 @@ Três métricas prioritárias para compor o dashboard:
 3. Tempo de resposta médio do ALB (TargetResponseTime): medir a experiência do usuário final.
 
 Com esses itens, a aplicação fica coberta do build ao deploy, mantendo o fluxo simples e eficiente para novos ambientes ou evoluções.
+
+Passo a passo de construção do ambiente arquivo : Deploy.md

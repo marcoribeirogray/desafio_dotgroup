@@ -1,23 +1,22 @@
-# .DS_Store
-# *.swp
-# *.swo
-# *~
+.DS_Store
+*.swp
+*.swo
+*~
 
-# .terraform/
-# *.tfstate
-# *.tfstate.backup
-# .terraform.lock.hcl
-# terraform.tfvars
+.terraform/
+*.tfstate
+*.tfstate.backup
+terraform.tfvars
 
-# .env
-# .env.local
-# credentials.json
-# *.pem
-# *.key
+.env
+.env.local
+credentials.json
+*.pem
+*.key
 
-# node_modules/
-# vendor/
+node_modules/
+vendor/
 
-# .vscode/
-# .idea/
-# *.iml
+.vscode/
+.idea/
+*.iml

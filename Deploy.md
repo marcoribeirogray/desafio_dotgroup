@@ -1,40 +1,48 @@
-# Deploy
+﻿# Deploy
 
-## Pré-requisitos
+## Pre-requisitos
 - Docker e Docker Compose instalados.
 - Terraform >= 1.5.
-- Credenciais AWS configuradas via `aws configure --profile desafio-dotgroup` 
-- `terraform/terraform.tfvars` preenchido com região, VPC, sub-redes, imagem Docker e, se desejar, nome do perfil.
+- Perfil AWS configurado com permissao para criar VPC, ALB, CloudWatch Logs, IAM e ECS.
+- Variavel de ambiente `AWS_PROFILE` definida ou `terraform.tfvars` contendo `aws_profile = "desafio-dotgroup"`.
+- `terraform/terraform.tfvars` preenchido com regiao, bloco CIDR, sub-redes, tag da imagem Docker e demais parametros exigidos pelos modulos.
+
+### Como preparar as credenciais AWS
+```bash
+aws configure --profile desafio-dotgroup
+# Depois de informar Access Key, Secret Key e regiao
+$env:AWS_PROFILE = "desafio-dotgroup"
+
+aws sts get-caller-identity --profile desafio-dotgroup
+```
+> Use `unset AWS_PROFILE` / `Remove-Item Env:AWS_PROFILE` para alternar perfis quando necessario.
 
 ## Passo a passo
 1. Validar localmente
    ```bash
    docker compose up --build
    ```
-   A aplicação responde em `http://localhost:8080`.
+   A aplicacao responde em `http://localhost:8080`.
 
-2. Executar o workflow da aplicação (`main.yml`)
+2. Executar o workflow da aplicacao (`main.yml`)
    - Push ou PR para `main` roda build, scan Trivy e publica a imagem `latest` no Docker Hub.
-   - Após validar, execute `terraform plan`/`apply` manualmente ou adapte o pipeline futuramente para automatizar essa etapa com aprovação.
+   - Depois da publicacao, siga para o provisionamento via Terraform (manual ou automatizado).
 
 3. Provisionar infraestrutura manualmente
    ```bash
    cd terraform
    terraform init
-   terraform plan
-   terraform apply
+   terraform plan -out=plano.tfplan
+   terraform apply plano.tfplan
    ```
-   Use esse passo apenas se precisar aplicar fora da esteira. Os outputs mostram o nome do cluster ECS e o DNS público do Application Load Balancer.
 
-4. Atualizar serviço se executar manualmente.
-   - Execute `terraform apply` localmente ou use `aws ecs update-service` para forçar a nova imagem.
-
-5. Limpeza
+4. Limpeza
    ```bash
    terraform destroy
    ```
    Remove todos os recursos criados pela stack.
 
-## Personalizações rápidas
-- Ajuste `terraform.tfvars` para alterar nomes (`project_name`, `environment`), ranges de rede e tag da imagem.
-- Modifique `DOCKER_IMAGE` no workflow caso o repositório Docker Hub seja outro.
+## Personalizacoes rapidas
+- Ajuste `terraform.tfvars` para alterar nomes `project_name`, `environment`, ranges de rede e tag da imagem.
+- Modifique `DOCKER_IMAGE` no workflow caso utilize outro repositorio Docker Hub.
+- Para backends remotos (S3 + DynamoDB), inclua o bloco `backend` no `terraform {}` antes de rodar o `init`.
