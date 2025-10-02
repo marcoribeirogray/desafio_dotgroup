@@ -18,120 +18,74 @@ $currentTime = date('Y-m-d H:i:s');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicação PHP Containerizada</title>
+    <title>App PHP - Desafio DotGroupo status</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
         }
-        
         .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-        }
-        
-        h1 {
-            color: #667eea;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 2em;
-        }
-        
-        .info-card {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-        }
-        
-        .info-card strong {
-            color: #333;
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .info-card span {
-            color: #666;
-            font-size: 1.1em;
-        }
-        
-        .counter {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
             padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            margin-top: 30px;
+            border: 1px solid #ddd;
         }
-        
-        .counter h2 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            opacity: 0.9;
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
         }
-        
-        .counter .number {
-            font-size: 3em;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f9f9f9;
             font-weight: bold;
+            width: 40%;
         }
-        
-        .status {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 15px;
-            border-radius: 5px;
-            text-align: center;
-            margin-top: 20px;
-            font-weight: 500;
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🚀 Aplicação PHP Modernizada</h1>
+        <h1>Status da aplicação</h1>
         
-        <div class="info-card">
-            <strong>Hostname do Container</strong>
-            <span><?php echo htmlspecialchars($hostname); ?></span>
-        </div>
+        <table>
+            <tr>
+                <th>Container Hostname</th>
+                <td><?php echo htmlspecialchars($hostname); ?></td>
+            </tr>
+            <tr>
+                <th>PHP Version</th>
+                <td><?php echo htmlspecialchars($phpVersion); ?></td>
+            </tr>
+            <tr>
+                <th>Server Time</th>
+                <td><?php echo htmlspecialchars($currentTime); ?></td>
+            </tr>
+            <tr>
+                <th>Request Counter</th>
+                <td><?php echo htmlspecialchars($counter); ?></td>
+            </tr>
+        </table>
         
-        <div class="info-card">
-            <strong>Versão do PHP</strong>
-            <span><?php echo htmlspecialchars($phpVersion); ?></span>
-        </div>
-        
-        <div class="info-card">
-            <strong>Data e Hora Atual</strong>
-            <span><?php echo htmlspecialchars($currentTime); ?></span>
-        </div>
-        
-        <div class="counter">
-            <h2>Total de Visitas</h2>
-            <div class="number"><?php echo htmlspecialchars($counter); ?></div>
-        </div>
-        
-        <div class="status">
-            ✅ Aplicação rodando com sucesso em ambiente containerizado!
+        <div class="footer">
+            Container running successfully
         </div>
     </div>
 </body>

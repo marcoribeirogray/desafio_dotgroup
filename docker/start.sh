@@ -1,5 +1,5 @@
 #!/bin/sh
 
-php-fpm83 -D
+php-fpm -D
 
 nginx -g 'daemon off;'

@@ -4,8 +4,8 @@ RUN apk add --no-cache nginx
 
 FROM php:8.3-fpm-alpine
 
-LABEL maintainer="DevOps Team" \
-      description="Aplicacao PHP containerizada com Nginx" \
+LABEL maintainer="DevOps Desafio DotGroup" \
+      description="Aplicacao PHP containerizada com nginx" \
       version="1.0"
 
 RUN apk add --no-cache nginx && \
@@ -15,9 +15,9 @@ RUN apk add --no-cache nginx && \
     chown -R appuser:appuser /var/www/html /var/log/nginx /var/lib/nginx /run/nginx && \
     chmod -R 755 /var/www/html
 
-COPY --chown=appuser:appuser ../app/index.php /var/www/html/
-COPY --chown=appuser:appuser ../app/nginx.conf /etc/nginx/http.d/default.conf
-COPY --chown=appuser:appuser start.sh /usr/local/bin/start.sh
+COPY --chown=appuser:appuser app/index.php /var/www/html/
+COPY --chown=appuser:appuser app/nginx.conf /etc/nginx/http.d/default.conf
+COPY --chown=appuser:appuser docker/start.sh /usr/local/bin/start.sh
 
 RUN chmod +x /usr/local/bin/start.sh
 
