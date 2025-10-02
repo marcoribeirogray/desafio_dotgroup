@@ -3,13 +3,19 @@ variable "aws_region" {
   type        = string
 }
 
+variable "aws_profile" {
+  description = "Perfil de credenciais AWS (opcional)"
+  type        = string
+  default     = ""
+}
+
 variable "project_name" {
   description = "Nome do projeto aplicado nas tags"
   type        = string
 }
 
 variable "environment" {
-  description = "Nome do ambiente :dev, prod)"
+  description = "Nome do ambiente :dev, prod"
   type        = string
 }
 
@@ -21,7 +27,11 @@ variable "vpc_cidr" {
 variable "public_subnets" {
   description = "Lista de CIDRs das sub-redes públicas"
   type        = list(string)
-  min_items   = 2
+
+  validation {
+    condition     = length(var.public_subnets) >= 2
+    error_message = "Informe ao menos duas sub-redes públicas."
+  }
 }
 
 variable "allowed_ingress_cidrs" {
